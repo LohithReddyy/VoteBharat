@@ -1,0 +1,11 @@
+import mongoose from "mongoose";
+
+const partySchema = new mongoose.Schema({
+    partyId: { type:Number , required: true, unique: true },
+    name: { type: String, required: true },
+    symbol: { type: String,required:true }, 
+    manifesto: { type: String, required: true },
+});
+
+const Party = mongoose.model("Party", partySchema);
+export default Party;
