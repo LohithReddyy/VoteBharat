@@ -16,13 +16,14 @@
 }
 .navbar-menu{
     display: flex;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     list-style: none;
     gap: 20px;
     color: white;
     flex-grow: 1;
     font-size: 18px;
     transition: 0.3s;
+    padding-left: 850px;
 }
  
 .navbar-menu li:hover{
@@ -32,9 +33,10 @@
     
 }
 .navbar-menu li{
-    padding: 5px 18px 3px 4px;
+    /* padding: 5px 18px 3px 4px; */
     justify-content: left;
     text-decoration: none;
     color: inherit;
+    padding-left: 20%;
 
 }
