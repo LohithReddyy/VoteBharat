@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // For navigation
-import { assets } from '../../assets/assets';
-import './LoginPopup.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { assets } from "../../assets/assets";
+import "./LoginPopup.css";
 
 const LoginPopup = ({ setShowLogin }) => {
     const [currState, setCurrState] = useState("Login");
-    const navigate = useNavigate(); // Hook for navigation
+    const navigate = useNavigate();
 
-    // Initial form state
     const initialFormState = {
         name: "",
         aadharNumber: "",
         age: "",
         gender: "",
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
     };
 
     const [formData, setFormData] = useState(initialFormState);
@@ -25,30 +26,60 @@ const LoginPopup = ({ setShowLogin }) => {
     };
 
     // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (currState === "Sign Up") {
             if (formData.password !== formData.confirmPassword) {
-                alert("Passwords do not match!");
+                toast.error("Passwords do not match!");
                 return;
             }
-            alert("Account Created Successfully!");
 
-            // Reset form and switch to login
-            setFormData(initialFormState);
-            setCurrState("Login");
+            try {
+                const response = await fetch("http://localhost:5000/users/signup", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData),
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    toast.success("Account Created Successfully!");
+                    setFormData(initialFormState);
+                    setCurrState("Login");
+                } else {
+                    toast.error(data.message || "Signup Failed");
+                }
+            } catch (error) {
+                toast.error("Server Error! Please try again.");
+            }
         } else {
-            alert("Login Successful!");
-            navigate('/home2'); // Redirect to Home2 page
+            try {
+                const response = await fetch("http://localhost:5000/users/signin", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        aadharNumber: formData.aadharNumber,
+                        password: formData.password,
+                    }),
+                });
 
-            // Reset login form
-            setFormData({ aadharNumber: "", password: "" });
+                const data = await response.json();
+                if (response.ok) {
+                    toast.success("Login Successful!");
+                    navigate("/home");
+                    setFormData({ aadharNumber: "", password: "" });
+                } else {
+                    toast.error(data.message || "Invalid credentials!");
+                }
+            } catch (error) {
+                toast.error("Server Error! Please try again.");
+            }
         }
     };
 
     return (
-        <div className='login-popup'>
+        <div className="login-popup">
             <form className="login-popup-container" onSubmit={handleSubmit}>
                 <div className="login-popup-title">
                     <h2>{currState}</h2>
@@ -59,6 +90,13 @@ const LoginPopup = ({ setShowLogin }) => {
                     {currState === "Sign Up" && (
                         <>
                             <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required />
+                        </>
+                    )}
+
+                    <input type="text" name="aadharNumber" placeholder="Aadhar Number" value={formData.aadharNumber} onChange={handleChange} required />
+
+                    {currState === "Sign Up" && (
+                        <>
                             <input type="number" name="age" placeholder="Age" value={formData.age} onChange={handleChange} required />
                             <select name="gender" value={formData.gender} onChange={handleChange} required>
                                 <option value="">Select Gender</option>
@@ -69,7 +107,6 @@ const LoginPopup = ({ setShowLogin }) => {
                         </>
                     )}
 
-                    <input type="text" name="aadharNumber" placeholder="Aadhar Number" value={formData.aadharNumber} onChange={handleChange} required />
                     <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
 
                     {currState === "Sign Up" && (
@@ -83,7 +120,7 @@ const LoginPopup = ({ setShowLogin }) => {
 
                 <p onClick={() => {
                     setCurrState(currState === "Login" ? "Sign Up" : "Login");
-                    setFormData(initialFormState); // Reset form when switching
+                    setFormData(initialFormState);
                 }}>
                     {currState === "Login" ? "New user? Sign Up" : "Already have an account? Login"}
                 </p>

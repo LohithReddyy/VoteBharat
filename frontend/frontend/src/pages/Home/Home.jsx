@@ -17,7 +17,7 @@ const Home = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setQuoteIndex((prevIndex) => (prevIndex + 1) % quotes.length);
-    }, 3000); // Change quote every 3 seconds
+    }, 2000); // Change quote every 3 seconds
     return () => clearInterval(interval);
   }, []);
 
