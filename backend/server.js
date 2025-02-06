@@ -4,6 +4,8 @@ import userRoutes from './routes/userRoutes.js';
 import 'dotenv/config';
 import partyRoutes from "./routes/partyRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import voteRoutes from "./routes/voteRoutes.js"
+
 import cors from 'cors';
 //connect to db
 connectDB();
@@ -24,6 +26,8 @@ app.use("/uploads", express.static("uploads"));
 app.use('/user', userRoutes);
 app.use("/parties", partyRoutes);
 app.use("/admin", adminRoutes);
+app.use("/api", voteRoutes);
+
 app.get('/', (req, res) => res.send('API is running...'));
 
 //server running
