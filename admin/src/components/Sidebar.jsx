@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users, Flag, X } from 'lucide-react';
+import { LayoutDashboard, Users, Flag, X, BarChart3 } from 'lucide-react';
 
 const navigation = [
   { name: 'Dashboard', to: '/dashboard', icon: LayoutDashboard },
   { name: 'Parties', to: '/parties', icon: Flag },
   { name: 'Users', to: '/users', icon: Users },
+  { name: 'Votes', to: '/votes', icon: BarChart3 }, // Added Votes Section
 ];
 
 function Sidebar({ isOpen, onClose }) {
@@ -56,7 +57,7 @@ function Sidebar({ isOpen, onClose }) {
         </div>
 
         {/* Black vertical line to the right of the sidebar */}
-        <div className="w-[1px] bg-black h-full absolute right-0 top-0"></div>
+        <div className="w-[2px] bg-black h-full absolute right-0 top-0 z-50"></div>
       </div>
     </>
   );

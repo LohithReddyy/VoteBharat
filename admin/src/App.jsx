@@ -7,6 +7,7 @@ import Parties from './pages/Parties';
 import Users from './pages/Users';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import Votes from './pages/Votes';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/parties" element={<Parties />} />
             <Route path="/users" element={<Users />} />
+            <Route path="/votes" element={<Votes />} />
           </Route>
         </Route>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
