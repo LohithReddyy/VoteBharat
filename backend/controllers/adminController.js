@@ -12,20 +12,6 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-//update user
-export const updateUser = async (req, res) => {
-  const { id } = req.params;
-  const { name, email, aadharNumber, role } = req.body;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No user with id: ${id}`);
-
-  const updatedUser = { name, email, aadharNumber, role, _id: id };
-
-  await User.findByIdAndUpdate(id, updatedUser, { new: true });
-
-  res.json(updatedUser);
-};
-
 
 
 // Admin Login
@@ -44,14 +30,28 @@ export const adminLogin = async (req, res) => {
   }
 };
 
-//Admin Dashboard
+//Dashboard
 export const getAdminDashboard = async (req, res) => {
   try {
-    const users = await User.find({}, "-password");
-    const parties = await Party.find({}, "-__v"); 
+    const userCount = await User.countDocuments();
+    const partyCount = await Party.countDocuments();
 
-    res.status(200).json({ users, parties });
+    res.status(200).json({ userCount, partyCount });
   } catch (error) {
     res.status(500).json({ message: "Error fetching admin dashboard data", error });
   }
 };
+
+
+//Count Votes
+export const getVotes = async (req, res) => {
+  try {
+  const parties = await Party.find({}, "name symbol voteCount");
+
+    res.status(200).json({ voteResults: parties });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching vote counts", error });
+  }
+};
+
+

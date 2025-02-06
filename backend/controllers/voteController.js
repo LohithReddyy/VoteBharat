@@ -14,7 +14,7 @@ export const getAllParties = async (req, res) => {
 
 // Vote for a party
 export const voteForParty = async (req, res) => {
-  const { aadharNumber, partyId } = req.body;
+  const { aadharNumber } = req.body;
 
   try {
     const user = await User.findOne({ aadharNumber });
