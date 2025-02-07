@@ -12,8 +12,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import logo from "../assets/logoo.png";
 
 function Navbar({ isLoggedIn, username, setIsLoggedIn }) {
@@ -42,19 +40,23 @@ function Navbar({ isLoggedIn, username, setIsLoggedIn }) {
       </div>
 
       <div className="flex items-center space-x-6 ml-auto">
-      <Link to="/" className="hover:text-gray-300 flex items-center space-x-2">
+        <Link
+          to={isLoggedIn ? "/home2" : "/"}
+          className="hover:text-gray-300 flex items-center space-x-2"
+        >
           <FontAwesomeIcon icon={faHome} />
           <span>Home</span>
         </Link>
 
         {isLoggedIn ? (
           <>
-          
+            {/* <span className="text-lg font-semibold text-orange-400">
+              Hello, {username || "User"}!
+            </span> */}
             <Link to="/voting" className="hover:text-gray-300 flex items-center space-x-2">
               <FontAwesomeIcon icon={faVoteYea} />
               <span>Vote</span>
             </Link>
-           
             <button onClick={handleLogout} className="flex items-center space-x-2 hover:text-gray-300">
               <FontAwesomeIcon icon={faSignOutAlt} />
               <span>Logout</span>

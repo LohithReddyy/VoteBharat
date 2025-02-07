@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Swal from "sweetalert2";
 function Voting() {
   const [parties, setParties] = useState([]);
   const [selectedParty, setSelectedParty] = useState(""); // Ensure this holds a valid ID
@@ -62,7 +62,7 @@ function Voting() {
       const data = await response.json();
 
       if (response.ok) {
-        toast.success("Vote cast successfully! Results will be declared soon.");
+        Swal.fire("Vote cast successfully! Results will be declared soon.");
         setHasVoted(true);
       } else {
         toast.error(data.message || "Voting failed");

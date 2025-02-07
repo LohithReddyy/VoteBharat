@@ -50,7 +50,7 @@ function Home2({ isLoggedIn }) {
     <>
       {/* Navbar with animation */}
       <div data-aos="fade-down">
-        <Navbar isLoggedIn={isLoggedIn} name={username} />
+        <Navbar isLoggedIn={isLoggedIn} username={username} />
       </div>
 
       {/* Hero Section */}
@@ -59,7 +59,14 @@ function Home2({ isLoggedIn }) {
           className="text-4xl md:text-6xl font-bold text-orange-500"
           data-aos="fade-up"
         >
-          {isLoggedIn ? `Welcome, ${username || "User"}!` : "Welcome to VoteBharat!"}
+          {isLoggedIn ? (
+    "Welcome to VoteBharat!"
+  ) :  (
+    <>
+      <span>Welcome, {username || "username"}!</span> <br />
+      
+    </>
+  ) }
         </h1>
 
         <button
