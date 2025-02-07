@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Swal from "sweetalert2";
 import {
   faHome,
   faPhone,
@@ -26,7 +27,7 @@ function Navbar({ isLoggedIn, username, setIsLoggedIn }) {
     localStorage.removeItem("userToken");
     localStorage.removeItem("username");
     setIsLoggedIn(false);
-    swal.fire("Logged out successfully!");
+    Swal.fire("Logged out successfully!");
     navigate("/");
   };
 

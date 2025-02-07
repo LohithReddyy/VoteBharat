@@ -24,7 +24,7 @@ function Home2({ isLoggedIn }) {
     const fetchUsername = async () => {
       if (storedAadhar) {
         try {
-          const response = await fetch("http://localhost:5000/user/getuser", {
+          const response = await fetch("http://localhost:5000/user/user", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ aadharNumber: storedAadhar }),
