@@ -1,19 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
-*{
-  padding: 0%;
-  margin: 0%;
-  box-sizing: border-box;
-  font-family: outfit;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import '@fontsource/poppins';
+body {
+  font-family: 'Poppins', sans-serif;
 }
-body{
-  min-height: 100vh;
-  
-}
-a{
-  text-decoration: none;
-  color: inherit;
-}
-.app{
-  width: 101%;
-  
+
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
 }

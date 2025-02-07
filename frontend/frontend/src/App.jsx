@@ -1,44 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import Navbar from './components/Navbar/navbar';
-import Home from './pages/Home/Home';
-import LoginPopup from './components/LoginPopup/LoginPopup';
-import AboutUs from './pages/AboutUs/AboutUs';
-import AdminLogin from './components/admin/adminlogin';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import SignUp from './pages/SignUp';
+import SignIn from './pages/SignIn';
+import Parties from './pages/Parties';
+import Voting from './pages/Voting';
+import ContactUs from './pages/Contactus';
 
-const App = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
-    if (token) {
-      setIsAdmin(true);
+    const token = localStorage.getItem('userToken');
+    const storedUsername = localStorage.getItem('username');
+    if (token && storedUsername) {
+      setIsLoggedIn(true);
+      setUsername(storedUsername);
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    setIsAdmin(false);
-    toast.success("Logged out successfully!"); // Show toast message on logout
-  };
-
   return (
-    <>
-      <ToastContainer position="top-right" autoClose={3000} />
-      {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
-      <div className="app">
-        <Navbar setShowLogin={setShowLogin} isAdmin={isAdmin} handleLogout={handleLogout} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/admin-login" element={<AdminLogin setIsAdmin={setIsAdmin} />} />
-        </Routes>
-      </div>
-    </>
+    <div className="flex flex-col min-h-screen">
+      <Navbar isLoggedIn={isLoggedIn} username={username} setIsLoggedIn={setIsLoggedIn} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} />} />
+        <Route path="/parties" element={<Parties />} />
+        <Route path="/voting" element={<Voting />} />
+        <Route path="/contact" element={<ContactUs />} />
+      </Routes>
+    </div>
   );
-};
+}
 
 export default App;
