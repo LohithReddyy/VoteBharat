@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Loader, Trash2 } from "lucide-react";
+import Swal from "sweetalert2";
+import { Loader, Trash2, Edit, PlusCircle} from "lucide-react";
 
 function Users() {
   const [users, setUsers] = useState([]);
@@ -26,26 +27,125 @@ function Users() {
     }
   };
 
-  const handleDelete = async (userId) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
+  const handleAddUser = async () => {
+    const { value: formValues } = await Swal.fire({
+      title: "Add New User",
+      html: `
+        <input id="swal-name" class="swal2-input" placeholder="Name">
+        <input id="swal-aadhar" class="swal2-input" placeholder="Aadhar Number">
+        <input id="swal-age" class="swal2-input" type="number" placeholder="Age">
+        <select id="swal-gender" class="swal2-input">
+          <option value="" disabled selected>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <input id="swal-password" class="swal2-input" type="password" placeholder="Password">
+      `,
+      showCancelButton: true,
+      confirmButtonText: "Add User",
+      preConfirm: () => {
+        return {
+          name: document.getElementById("swal-name").value,
+          aadharNumber: document.getElementById("swal-aadhar").value,
+          age: document.getElementById("swal-age").value,
+          gender: document.getElementById("swal-gender").value,
+          password: document.getElementById("swal-password").value,
+        };
+      },
+    });
 
-    try {
-      await axios.delete(`http://localhost:5000/admin/users/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
-        },
-      });
+    if (formValues) {
+      try {
+        await axios.post("http://localhost:5000/admin/adduser", formValues, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        });
+        toast.success("User added successfully!");
+        fetchUsers();
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to add user");
+      }
+    }
+  };
 
-      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
-      toast.success("User deleted successfully");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to delete user");
+  const handleUpdateUser = async (id, user) => {
+    const { value: formValues } = await Swal.fire({
+      title: "Update User",
+      html: `
+        <input id="swal-name" class="swal2-input" placeholder="Name" value="${user.name}">
+        <input id="swal-aadhar" class="swal2-input" placeholder="Aadhar Number" value="${user.aadharNumber}">
+        <input id="swal-age" class="swal2-input" type="number" placeholder="Age" value="${user.age}">
+        <select id="swal-gender" class="swal2-input">
+          <option value="Male" ${user.gender === "Male" ? "selected" : ""}>Male</option>
+          <option value="Female" ${user.gender === "Female" ? "selected" : ""}>Female</option>
+          <option value="Other" ${user.gender === "Other" ? "selected" : ""}>Other</option>
+        </select>
+      `,
+      showCancelButton: true,
+      confirmButtonText: "Update User",
+      preConfirm: () => {
+        return {
+          name: document.getElementById("swal-name").value,
+          aadharNumber: document.getElementById("swal-aadhar").value,
+          age: document.getElementById("swal-age").value,
+          gender: document.getElementById("swal-gender").value,
+        };
+      },
+    });
+
+    if (formValues) {
+      try {
+        await axios.put(`http://localhost:5000/admin/updateuser/${id}`, formValues, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        });
+        toast.success("User updated successfully!");
+        fetchUsers();
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to update user");
+      }
+    }
+  };
+
+  const handleDeleteUser = async (id) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This action will permanently delete the user!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:5000/admin/deleteuser/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        });
+        toast.success("User deleted successfully!");
+        fetchUsers();
+      } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to delete user");
+      }
     }
   };
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold text-gray-900">Users</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold text-gray-900">Users</h1>
+        <button
+          onClick={handleAddUser}
+         className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700"
+        >
+          <PlusCircle className="h-4 w-4 mr-1" /> Add User
+        </button>
+      </div>
 
       {loading ? (
         <div className="mt-6 flex justify-center">
@@ -63,12 +163,20 @@ function Users() {
               <p className="mt-1 text-sm text-gray-500">Gender: {user.gender}</p>
               <p className="mt-1 text-sm text-gray-500">Has Voted: {user.hasVoted ? "Yes" : "No"}</p>
 
-              <div className="mt-4 flex justify-end">
+              <div className="mt-4 flex justify-between">
                 <button
-                  onClick={() => handleDelete(user._id)}
-                  className="text-red-600 hover:text-red-800 flex items-center"
+                  onClick={() => handleUpdateUser(user._id, user)}
+                  className="bg-yellow-500 text-white px-3 py-1 rounded flex items-center hover:bg-yellow-600"
                 >
-                  <Trash2 className="w-4 h-4 mr-1" />
+                  <Edit className="w-4 h-4 mr-2" />
+                  Update
+                </button>
+
+                <button
+                  onClick={() => handleDeleteUser(user._id)}
+                  className="bg-red-600 text-white px-3 py-1 rounded flex items-center hover:bg-red-700"
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
                   Delete
                 </button>
               </div>
