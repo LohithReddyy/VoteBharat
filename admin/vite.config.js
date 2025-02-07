@@ -12,4 +12,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
     
   },
+  server: {
+    historyApiFallback: true, // Ensures correct routing on refresh
+  },
 });
