@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faIdCard, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-function SignIn({ setIsLoggedIn, setUsername }) {
+function SignIn({ setIsLoggedIn, setUsername, setAadharNumber }) {
   const [credentials, setCredentials] = useState({ aadharNumber: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -21,15 +21,18 @@ function SignIn({ setIsLoggedIn, setUsername }) {
     setShowPassword(prev => !prev);
   };
 
+  const fetchUserNameByAadhar = (aadhar) => {
+    const users = JSON.parse(localStorage.getItem("users")) || {};
+    return users[aadhar] || "User";
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await fetch('http://localhost:5000/user/signin', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials)
       });
 
@@ -37,13 +40,17 @@ function SignIn({ setIsLoggedIn, setUsername }) {
 
       if (response.ok) {
         localStorage.setItem('userToken', data.token);
-        localStorage.setItem('username', data.name);
+        localStorage.setItem('aadharNumber', credentials.aadharNumber);
+
+        const name = fetchUserNameByAadhar(credentials.aadharNumber);
+        localStorage.setItem('username', name);
 
         setIsLoggedIn(true);
-        setUsername(data.name);
+        setUsername(name);
+        setAadharNumber(credentials.aadharNumber);
 
         Swal.fire('Success', 'Login Successful', 'success');
-        navigate('/');
+        navigate('/home2'); // Redirect to home2.jsx
       } else {
         Swal.fire('Error', data.message || 'Login Failed', 'error');
       }
