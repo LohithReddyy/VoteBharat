@@ -19,7 +19,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/admin/login",
+        "https://votebharat.onrender.com/admin/login",
         formData
       );
       localStorage.setItem("adminToken", response.data.token);

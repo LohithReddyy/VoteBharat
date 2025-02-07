@@ -9,7 +9,7 @@ function Votes() {
   useEffect(() => {
     const fetchVotes = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/admin/votes", {
+        const response = await axios.get("https://votebharat.onrender.com/admin/votes", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
           },
@@ -57,7 +57,7 @@ function Votes() {
               <tr key={party.name} className="hover:bg-gray-100">
                 <td className="border border-gray-300 px-4 py-2">{party.name}</td>
                 <td className="border border-gray-300 px-4 py-2">
-                  <img src={`http://localhost:5000/${party.symbol}`} alt={party.name} className="h-10 w-10 object-contain"/>
+                  <img src={`https://votebharat.onrender.com/${party.symbol}`} alt={party.name} className="h-10 w-10 object-contain"/>
                 </td>
                 <td className="border border-gray-300 px-4 py-2">{party.voteCount}</td>
               </tr>

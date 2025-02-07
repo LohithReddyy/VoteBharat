@@ -21,7 +21,7 @@ function Parties() {
 
   const fetchParties = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/parties");
+      const response = await axios.get("https://votebharat.onrender.com/api/parties");
       setParties(response.data);
     } catch (error) {
       toast.error("Failed to fetch parties");
@@ -46,7 +46,7 @@ function Parties() {
 
     try {
       if (editingParty) {
-        await axios.put(`http://localhost:5000/parties/${editingParty._id}`, formDataObj, {
+        await axios.put(`https://votebharat.onrender.com/parties/${editingParty._id}`, formDataObj, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
@@ -54,7 +54,7 @@ function Parties() {
         });
         toast.success("Party updated successfully");
       } else {
-        await axios.post("http://localhost:5000/parties/add", formDataObj, {
+        await axios.post("https://votebharat.onrender.com/parties/add", formDataObj, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
@@ -92,7 +92,7 @@ function Parties() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.delete(`http://localhost:5000/parties/${id}`, {
+          await axios.delete(`https://votebharat.onrender.com/parties/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           toast.success("Party deleted successfully");
@@ -127,7 +127,7 @@ function Parties() {
         {parties.map((party) => (
           <div key={party._id} className="bg-white rounded-lg shadow overflow-hidden">
             <img
-              src={`http://localhost:5000/${party.symbol}`}
+              src={`https://votebharat.onrender.com/${party.symbol}`}
               alt={`${party.name} symbol`}
               className="w-full h-40 object-contain"
             />

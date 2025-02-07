@@ -10,7 +10,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/admin/dashboard', {
+        const response = await axios.get('https://votebharat.onrender.com/admin/dashboard', {
           headers: { Authorization: `Bearer ${localStorage.getItem('adminToken')}` },
         });
         setStats(response.data);

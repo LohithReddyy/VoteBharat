@@ -14,7 +14,7 @@ function Users() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/admin/users", {
+      const response = await axios.get("https://votebharat.onrender.com/admin/users", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
         },
@@ -57,7 +57,7 @@ function Users() {
 
     if (formValues) {
       try {
-        await axios.post("http://localhost:5000/admin/adduser", formValues, {
+        await axios.post("https://votebharat.onrender.com/admin/adduser", formValues, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
           },
@@ -97,7 +97,7 @@ function Users() {
 
     if (formValues) {
       try {
-        await axios.put(`http://localhost:5000/admin/updateuser/${id}`, formValues, {
+        await axios.put(`https://votebharat.onrender.com/admin/updateuser/${id}`, formValues, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
           },
@@ -122,7 +122,7 @@ function Users() {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:5000/admin/deleteuser/${id}`, {
+        await axios.delete(`https://votebharat.onrender.com/admin/deleteuser/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
           },
