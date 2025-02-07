@@ -6,4 +6,5 @@ const router = express.Router();
 router.get("/parties", getAllParties); // Fetch all parties
 router.post("/vote", voteForParty); // Vote for a party
 
+
 export default router;

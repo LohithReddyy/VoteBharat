@@ -99,3 +99,27 @@ export const signin = async (req, res) => {
     }
 };
 
+
+export const getUserDetails = async (req, res) => {
+  try {
+    const { aadharNumber } = req.body;
+
+    if (!aadharNumber) {
+      return res.status(400).json({ message: "Aadhar number is required" });
+    }
+
+    const user = await User.findOne({ aadharNumber });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({
+      name: user.name,
+      aadharNumber: user.aadharNumber,
+      hasVoted: user.hasVoted,
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
