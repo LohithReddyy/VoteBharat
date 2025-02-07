@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
 import { FaUser, FaIdCard, FaBirthdayCake, FaVenusMars, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 
 function SignUp() {
@@ -30,7 +29,11 @@ function SignUp() {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      toast.error('Passwords do not match!');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Passwords do not match!',
+      });
       return;
     }
 
@@ -43,23 +46,38 @@ function SignUp() {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
-        toast.success('Sign Up Successful!');
-        navigate('/signin');
+        Swal.fire({
+          icon: 'success',
+          title: 'Registered Successfully!',
+          text: 'You can now log in to your account.',
+          timer: 2000, // Auto close after 2 seconds
+          showConfirmButton: false,
+        }).then(() => {
+          navigate('/signin');
+        });
       } else {
-        toast.error('Sign Up Failed!');
+        Swal.fire({
+          icon: 'error',
+          title: 'Sign Up Failed!',
+          text: data.message || 'Please try again.',
+        });
       }
     } catch (error) {
-      toast.error('Network Error!');
+      Swal.fire({
+        icon: 'error',
+        title: 'Network Error!',
+        text: 'Please check your internet connection and try again.',
+      });
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white p-6 font-[Poppins] pt-16">
-
-
-    <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm pt-12"> 
-      <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Create an Account</h2>
+      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm pt-12">
+        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Create an Account</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Full Name */}
           <div className="flex items-center border rounded-md p-3 bg-gray-100">
