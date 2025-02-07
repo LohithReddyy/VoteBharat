@@ -55,8 +55,10 @@ function SignUp() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white p-6 font-[Poppins]">
-    <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md"> {/* Reduced max-width */}
+    <div className="min-h-screen flex items-center justify-center bg-white p-6 font-[Poppins] pt-16">
+
+
+    <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm pt-12"> 
       <h2 className="text-3xl font-semibold text-center text-gray-800 mb-6">Create an Account</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Full Name */}

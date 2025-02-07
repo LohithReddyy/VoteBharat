@@ -30,7 +30,7 @@ function Navbar({ isLoggedIn, username, setIsLoggedIn }) {
   return (
     <nav
     data-aos="fade-down"
-    className="bg-[#1E212B] text-white p-4 flex justify-between items-center shadow-lg fixed top-0 left-0 w-full max-w-full z-50 overflow-x-hidden"
+    className="bg-[#1E212B] text-white p-3 flex justify-between items-center shadow-lg fixed top-0 left-0 w-full max-w-full z-50 overflow-x-hidden"
   >
   
       <div className="flex items-center space-x-3">
@@ -87,7 +87,7 @@ function Navbar({ isLoggedIn, username, setIsLoggedIn }) {
               className="hover:text-gray-300 flex items-center space-x-2"
             >
               <FontAwesomeIcon icon={faSignInAlt} />
-              <span>Login</span>
+              <span>Sign In</span>
             </Link>
           </>
         )}

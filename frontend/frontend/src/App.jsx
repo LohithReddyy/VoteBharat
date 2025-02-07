@@ -7,6 +7,8 @@ import SignIn from './pages/SignIn';
 import Parties from './pages/Parties';
 import Voting from './pages/Voting';
 import ContactUs from './pages/Contactus';
+import AboutUs from './pages/AboutUs';
+
 
 
 function App() {
@@ -32,6 +34,7 @@ function App() {
         <Route path="/parties" element={<Parties />} />
         <Route path="/voting" element={<Voting />} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="/about" element={<AboutUs />} />
       </Routes>
     </div>
   );

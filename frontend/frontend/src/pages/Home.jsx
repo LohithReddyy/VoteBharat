@@ -147,9 +147,8 @@ function Home() {
         <h3 className="text-xl font-semibold">Quick Links</h3>
         <ul className="mt-3 flex justify-center space-x-6 text-lg">
           <li><a href="/about" className="hover:text-gray-400 transition duration-300">About Us</a></li>
-          <li><a href="/services" className="hover:text-gray-400 transition duration-300">Services</a></li>
-          <li><a href="/team" className="hover:text-gray-400 transition duration-300">Team</a></li>
-          <li><a href="/contact" className="hover:text-gray-400 transition duration-300">Contact</a></li>
+          <li><a href="/signup" className="hover:text-gray-400 transition duration-300">Sign Up</a></li>
+          <li><a href="/contact" className="hover:text-gray-400 transition duration-300">Contact Us</a></li>
         </ul>
 
         {/* Social Media Icons */}
