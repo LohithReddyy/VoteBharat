@@ -9,7 +9,8 @@ import Voting from "./pages/Voting";
 import AboutUs from "./pages/AboutUs";
 import Results from "./pages/Results";
 import ProtectedRoute from "./components/ProtectedRoute";
-import ContactUs from "./pages/Contactus";
+import ContactUs from "./pages/ContactUs";
+
 
 function App() {
   const navigate = useNavigate();
