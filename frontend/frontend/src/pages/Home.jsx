@@ -64,20 +64,37 @@ function Home() {
           data-aos-duration="2500"
         ></div>
 
-        <div className="relative z-10 w-full md:w-1/2 text-left space-y-5 px-4 md:px-1" data-aos="fade-up" data-aos-duration="2000">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-orange-500 transition-all duration-1000 ease-in whitespace-nowrap">
-            <span className="text-white voteBharatText">Welcome to VoteBharat!</span>
-          </h1>
-          <p className="text-xl sm:text-2xl text-white">{currentTagline}</p>
-          <button
-            onClick={() => navigate("/signup")}
-            className="mt-6 bg-green-800 text-black px-6 py-3 rounded-md flex items-center gap-2 hover:bg-green-500 transition-all ease-in-out"
-            data-aos="fade-up"
-            data-aos-duration="2000"
-          >
-            Get Started <FontAwesomeIcon icon={faArrowRight} />
-          </button>
-        </div>
+        <div 
+  className="relative z-10 w-full xl:w-1/2 text-left space-y-5 px-4 xl:px-6" 
+  data-aos="fade-up" 
+  data-aos-duration="2000"
+>
+  <h1 
+    className="text-3xl sm:text-4xl md:text-4xl lg:text-6xl xl:text-5xl font-bold text-orange-500 
+               transition-all duration-1000 ease-in 
+               w-full max-w-full break-words overflow-hidden leading-tight 
+               whitespace-normal xl:whitespace-nowrap text-wrap balance"
+  >
+   <span className="text-orange-500">Welcome to</span> 
+   <span className="text-white"> VoteBharat!</span>
+  </h1>
+  <p 
+    className="text-xl sm:text-2xl text-white 
+               w-full max-w-full break-words overflow-hidden leading-tight whitespace-normal text-wrap balance"
+  >
+    {currentTagline}
+  </p>
+  <button
+    onClick={() => navigate("/signup")}
+    className="mt-6 bg-green-800 text-black px-6 py-3 rounded-md flex items-center gap-2 
+               hover:bg-green-500 transition-all ease-in-out"
+    data-aos="fade-up"
+    data-aos-duration="2000"
+  >
+    Get Started <FontAwesomeIcon icon={faArrowRight} />
+  </button>
+</div>
+
       </div>
 
       {/* Dynamic Sections */}
