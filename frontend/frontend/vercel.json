@@ -1,14 +1,4 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/" }],
-    "headers": [
-      {
-        "source": "/**/*.js",
-        "headers": [{ "key": "Content-Type", "value": "application/javascript" }]
-      },
-      {
-        "source": "/**/*.css",
-        "headers": [{ "key": "Content-Type", "value": "text/css" }]
-      }
-    ]
+    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
   }
   
