@@ -55,24 +55,25 @@ function Home2({ isLoggedIn }) {
 
       {/* Hero Section */}
       <div className="flex flex-col items-center justify-center h-screen w-full bg-white text-center space-y-8">
-        <h1 
-          className="text-4xl md:text-6xl font-bold text-orange-500"
-          data-aos="fade-up"
-        >
-          {isLoggedIn ? (
+      <h1 
+  className="text-4xl md:text-6xl font-bold text-orange-500"
+  data-aos="fade-down"
+  
+>
+  {isLoggedIn ? (
     "Welcome to VoteBharat!"
-  ) :  (
+  ) : username ? ( 
     <>
-      <span>Welcome, {username || "username"}!</span> <br />
-      
+      <span>Welcome, {username}!</span> <br />
     </>
-  ) }
-        </h1>
+  ) : null }
+</h1>
+
 
         <button
           onClick={() => navigate("/voting")}
           className="bg-green-600 text-white px-5 py-3 rounded-md flex items-center gap-2 hover:bg-green-500 transition-all ease-in-out"
-          data-aos="zoom-in"
+          data-aos="fade-up"
         >
           {isLoggedIn ? "Start Voting" : "Start Voting"}
         </button>

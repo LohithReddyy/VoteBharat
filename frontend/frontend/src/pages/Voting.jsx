@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
+
 function Voting() {
   const [parties, setParties] = useState([]);
-  const [selectedParty, setSelectedParty] = useState(""); // Ensure this holds a valid ID
-  const [hasVoted, setHasVoted] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [selectedParty, setSelectedParty] = useState("");
+  const [hasVoted, setHasVoted] = useState(null); // Set to `null` initially to prevent UI flicker
   const aadharNumber = localStorage.getItem("aadharNumber");
 
   useEffect(() => {
@@ -21,7 +21,6 @@ function Voting() {
         const data = await response.json();
         if (response.ok) {
           setHasVoted(data.hasVoted);
-          setUserName(data.name);
         } else {
           toast.error(data.message || "Failed to fetch user details");
         }
@@ -43,8 +42,13 @@ function Voting() {
     if (aadharNumber) {
       fetchUserDetails();
     }
-    fetchParties();
   }, [aadharNumber]);
+
+  useEffect(() => {
+    if (hasVoted === false) {
+      fetchParties();
+    }
+  }, [hasVoted]);
 
   const handleVote = async () => {
     if (!selectedParty || selectedParty.trim() === "") {
@@ -72,13 +76,14 @@ function Voting() {
     }
   };
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl mb-6">Welcome, {userName || "Voter"}!</h1>
+  if (hasVoted === null) {
+    return <div className="flex justify-center items-center h-screen text-xl">Loading...</div>;
+  }
 
+  return (
+    <div className="container mx-auto px-4 py-8 flex justify-center items-center min-h-screen">
       {hasVoted ? (
-        
-        <div className="flex justify-center items-center screen text-4xl text-green-600  font-semibold">
+        <div className="text-4xl text-green-600 font-semibold mt-24">
           <p>✅ Thanks for voting! Results will be announced soon.</p>
         </div>
       ) : (

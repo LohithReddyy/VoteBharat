@@ -14,8 +14,6 @@ import ContactUs from "./pages/ContactUs";
 
 function App() {
   const navigate = useNavigate();
-
-  // Initialize state from localStorage
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("userToken"));
   const [username, setUsername] = useState("");
   const [aadharNumber, setAadharNumber] = useState("");
@@ -27,19 +25,26 @@ function App() {
     if (token && storedAadhar) {
       setIsLoggedIn(true);
       setAadharNumber(storedAadhar);
-
-      // Fetch username based on Aadhar number
       const users = JSON.parse(localStorage.getItem("users")) || {};
       setUsername(users[storedAadhar] || "User");
     }
   }, []);
 
-  // Redirect to /home2 if logged in and trying to access "/"
   useEffect(() => {
     if (isLoggedIn && window.location.pathname === "/") {
       navigate("/home2");
     }
   }, [isLoggedIn, navigate]);
+
+  useEffect(() => {
+    if (isLoggedIn && ["/home2", "/voting", "/results"].includes(window.location.pathname)) {
+      window.history.pushState(null, "", window.location.href);
+      window.onpopstate = () => {
+        window.history.pushState(null, "", window.location.href);
+      };
+    }
+  }, [isLoggedIn]);
+  
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -50,7 +55,7 @@ function App() {
         <Route path="/signin" element={<SignIn setIsLoggedIn={setIsLoggedIn} setUsername={setUsername} setAadharNumber={setAadharNumber} />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<AboutUs />} />
-
+        
         {/* Protected Routes */}
         <Route element={<ProtectedRoute isLoggedIn={isLoggedIn} />}>
           <Route path="/home2" element={<Home2 username={username} />} />
@@ -61,5 +66,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;
