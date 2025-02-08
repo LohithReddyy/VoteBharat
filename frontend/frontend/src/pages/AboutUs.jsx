@@ -3,7 +3,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { FaUsers, FaGlobe, FaHandshake } from "react-icons/fa";
 import lohithImage from "../assets/lohith.jpg"; // Import your photo
-import yashImage from "../assets/yash.jpg";
+import yashImage from "../assets/yash.png";
 import harshithImg from "../assets/harshith.jpg" // Import your photo
 
 function AboutUs() {

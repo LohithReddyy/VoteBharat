@@ -77,7 +77,8 @@ function Voting() {
       <h1 className="text-3xl mb-6">Welcome, {userName || "Voter"}!</h1>
 
       {hasVoted ? (
-        <div className="text-center text-lg text-green-600 font-semibold">
+        
+        <div className="flex justify-center items-center screen text-4xl text-green-600  font-semibold">
           <p>✅ Thanks for voting! Results will be announced soon.</p>
         </div>
       ) : (

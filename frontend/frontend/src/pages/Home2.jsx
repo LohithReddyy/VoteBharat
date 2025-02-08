@@ -71,10 +71,10 @@ function Home2({ isLoggedIn }) {
 
         <button
           onClick={() => navigate("/voting")}
-          className="bg-green-800 text-black px-6 py-3 rounded-md flex items-center gap-2 hover:bg-green-500 transition-all ease-in-out"
+          className="bg-green-600 text-white px-5 py-3 rounded-md flex items-center gap-2 hover:bg-green-500 transition-all ease-in-out"
           data-aos="zoom-in"
         >
-          {isLoggedIn ? "Start Voting" : "Vote"}
+          {isLoggedIn ? "Start Voting" : "Start Voting"}
         </button>
       </div>
     </>
