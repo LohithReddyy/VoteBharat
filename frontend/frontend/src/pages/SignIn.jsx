@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +9,14 @@ function SignIn({ setIsLoggedIn, setUsername, setAadharNumber }) {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (localStorage.getItem('userToken')) {
+      window.history.pushState(null, null, window.location.href);
+      window.onpopstate = function () {
+        window.history.go(1); // Prevent back navigation
+      };
+    }
+  }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCredentials(prev => ({
@@ -30,7 +38,7 @@ function SignIn({ setIsLoggedIn, setUsername, setAadharNumber }) {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/user/signin', {
+      const response = await fetch('https://votebharat.onrender.com/user/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials)

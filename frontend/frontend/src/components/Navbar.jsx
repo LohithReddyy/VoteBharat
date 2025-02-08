@@ -9,6 +9,7 @@ import {
   faSignInAlt,
   faSignOutAlt,
   faVoteYea,
+  faPoll,
 } from "@fortawesome/free-solid-svg-icons";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -57,6 +58,11 @@ function Navbar({ isLoggedIn, username, setIsLoggedIn }) {
               <FontAwesomeIcon icon={faVoteYea} />
               <span>Vote</span>
             </Link>
+            <Link to="/results" className="hover:text-gray-300 flex items-center space-x-2">
+          <FontAwesomeIcon icon={faPoll} /> 
+          <span>Results</span>
+        </Link>
+            
             <button onClick={handleLogout} className="flex items-center space-x-2 hover:text-gray-300">
               <FontAwesomeIcon icon={faSignOutAlt} />
               <span>Logout</span>

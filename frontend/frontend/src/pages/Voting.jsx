@@ -12,7 +12,7 @@ function Voting() {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch("http://localhost:5000/user/user", {
+        const response = await fetch("https://votebharat.onrender.com/user/user", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ aadharNumber }),
@@ -32,7 +32,7 @@ function Voting() {
 
     const fetchParties = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/parties");
+        const response = await fetch("https://votebharat.onrender.com/api/parties");
         const data = await response.json();
         setParties(data);
       } catch (error) {
@@ -53,7 +53,7 @@ function Voting() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/vote", {
+      const response = await fetch("https://votebharat.onrender.com/api/vote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ aadharNumber, partyId: selectedParty }),
@@ -105,7 +105,7 @@ function Voting() {
                   <td className="border border-gray-300 px-4 py-2">{party.name}</td>
                   <td className="border border-gray-300 px-4 py-2">
                     <img
-                      src={`http://localhost:5000/${party.symbol}`}
+                      src={`https://votebharat.onrender.com/${party.symbol}`}
                       alt={`${party.name} Logo`}
                       className="w-16 h-16 object-contain mx-auto"
                     />
