@@ -45,7 +45,7 @@ Ensure you have the following installed:
 
 ### **Clone the Repository**
 ```bash
- git clone -b admin https://github.com/LohithReddy/VoteBharat.git
+ git clone -b admin https://github.com/LohithReddyy/VoteBharat.git
  cd VoteBharat/admin
 ```
 
